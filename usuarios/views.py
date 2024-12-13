@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from .forms import ClienteForm
-from .models import Cliente
+from .models import *
 from django.http import JsonResponse
 
 def login_view(request):
@@ -57,7 +57,31 @@ def lista_clientes_view(request):
 
 def venta_cliente_view(request, id):
     cliente = get_object_or_404(Cliente, id=id)
-    return render(request, 'usuarios/venta_cliente.html', {'cliente': cliente})
+    productos = Producto.objects.all()  # Obtener los productos disponibles
+    productos_seleccionados = []
+    total = 0
+    
+    if request.method == 'POST':
+        seleccionados = request.POST.getlist('productos')  # Lista de productos seleccionados
+        cantidades = request.POST.getlist('cantidades')  # Lista de cantidades de cada producto
+        
+        for idx, producto_id in enumerate(seleccionados):
+            producto = Producto.objects.get(id=producto_id)
+            cantidad = float(cantidades[idx])
+            subtotal = producto.precio * cantidad
+            productos_seleccionados.append({
+                'producto': producto,
+                'cantidad': cantidad,
+                'subtotal': subtotal,
+            })
+            total += subtotal
+    
+    return render(request, 'usuarios/venta_cliente.html', {
+        'cliente': cliente,
+        'productos': productos,
+        'productos_seleccionados': productos_seleccionados,
+        'total': total
+    })
 
 def buscar_clientes(request):
     query = request.GET.get('search', '') 
@@ -65,3 +89,8 @@ def buscar_clientes(request):
     clientes_data = list(clientes.values('id', 'nombre', 'establecimiento'))  
 
     return JsonResponse(clientes_data, safe=False)
+
+def administracion_view(request):
+    productos = Producto.objects.all()
+
+    return render(request, 'usuarios/administracion.html', {'productos': productos})

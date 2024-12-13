@@ -64,9 +64,6 @@ textarea {
     box-sizing: border-box;
 }
 
-
-/* Botón */
-
 button {
     background: linear-gradient(180deg, #8b0000, #ff6347);
     color: white;

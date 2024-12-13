@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración - Productos</title>
+    <link rel="stylesheet" href="{% static 'css/styles-administracion.css' %}">
+</head>
+<body>
+    <div class="client-details-container">
+        <button class="btn-back" onclick="history.back()">Atrás</button>
+
+        <h1 class="page-title">Administración de Productos</h1>
+
+        <div class="client-info">
+            <h2>Listado de Productos</h2>
+
+            <div class="client-card">
+                {% if productos %}
+                    <ul>
+                        {% for producto in productos %}
+                            <li>
+                                <strong>{{ producto.nombre }}</strong> - ${{ producto.precio }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No hay productos disponibles.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
