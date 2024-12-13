@@ -39,7 +39,7 @@ def crear_cliente_view(request):
         form = ClienteForm(request.POST)
         if form.is_valid():
             form.save()
-            return render(request, 'usuarios/crear_cliente.html', {'form': form, 'mensaje': 'Cliente creado con éxito'})
+            return redirect('listar-clientes')
     else:
         form = ClienteForm()
 
@@ -49,3 +49,6 @@ def lista_clientes_view(request):
     clientes = Cliente.objects.all()
     
     return render(request, 'usuarios/listar_clientes.html', {'clientes': clientes})
+
+def venta_cliente_view(request):
+    return render(request, 'usuarios/venta_cliente.html')
