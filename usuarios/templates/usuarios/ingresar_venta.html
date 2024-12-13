@@ -21,12 +21,46 @@
                 class="search-input" 
                 placeholder="Buscar por nombre de cliente" 
                 autocomplete="off">
-            <a href="{% url 'venta-cliente' %}" class="btn btn-primary">Buscar</a>
         </div>
 
         <div class="details-container">
-            <button id="client-details-btn" class="btn btn-secondary" disabled>Ver Detalle del Cliente</button>
+        </div>
+
+        <div class="client-list" id="client-list">
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('#search-client').on('input', function() {
+            var query = $(this).val();  
+
+            $.ajax({
+                url: '{% url "buscar-clientes" %}', 
+                data: { 'search': query },  
+                dataType: 'json',  
+                success: function(data) {
+                    var html = '';
+                    if (data.length > 0) {
+                        data.forEach(function(cliente) {
+                            html += '<div class="client-item" data-id="' + cliente.id + '">' +
+                                        '<p><strong>' + cliente.establecimiento + '</strong></p>' +
+                                    '</div>';
+                        });
+                    } else {
+                        html = '<p>No se encontraron clientes.</p>';
+                    }
+
+                    $('#client-list').html(html);
+                }
+            });
+        });
+
+        $(document).on('click', '.client-item', function() {
+            var clienteId = $(this).data('id');  
+
+            window.location.href = "{% url 'venta-cliente' 0 %}".replace('0', clienteId);
+        });
+    </script>
 </body>
 </html>

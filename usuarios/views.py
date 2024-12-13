@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from .forms import ClienteForm
 from .models import Cliente
+from django.http import JsonResponse
 
 def login_view(request):
     if request.method == 'POST':
@@ -32,7 +33,11 @@ def ventas_view(request):
     return render(request, 'usuarios/ventas.html')
 
 def ingresar_venta_view(request):
-    return render(request, 'usuarios/ingresar_venta.html')
+    
+    query = request.GET.get('search', '')  
+    clientes = Cliente.objects.filter(nombre__icontains=query)  
+    
+    return render(request, 'usuarios/ingresar_venta.html', {'clientes': clientes})
 
 def crear_cliente_view(request):
     if request.method == 'POST':
@@ -50,5 +55,13 @@ def lista_clientes_view(request):
     
     return render(request, 'usuarios/listar_clientes.html', {'clientes': clientes})
 
-def venta_cliente_view(request):
-    return render(request, 'usuarios/venta_cliente.html')
+def venta_cliente_view(request, id):
+    cliente = get_object_or_404(Cliente, id=id)
+    return render(request, 'usuarios/venta_cliente.html', {'cliente': cliente})
+
+def buscar_clientes(request):
+    query = request.GET.get('search', '') 
+    clientes = Cliente.objects.filter(establecimiento__icontains=query)  
+    clientes_data = list(clientes.values('id', 'nombre', 'establecimiento'))  
+
+    return JsonResponse(clientes_data, safe=False)
