@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - UROMED</title>
+    <link rel="stylesheet" href="{% static 'css/styles-home.css' %}">
+</head>
+<body>
+    {% block content %}
+        <h2 class="welcome-title">Bienvenido, {{ request.user.username }}!</h2>
+        <p class="welcome-text">Utiliza el menú de navegación para acceder a las funcionalidades disponibles.</p>
+        
+        <div class="cards-container">
+            <div class="card" id="ventas">
+                <h3>Ventas</h3>
+                <p>Consulta y gestiona las ventas realizadas.</p>
+                <a href="{% url 'ventas' %}" class="btn">Ver Ventas</a>
+            </div>
+            <div class="card" id="clientes">
+                <h3>Clientes</h3>
+                <p>Accede a la información de los clientes registrados.</p>
+                <a href="{% url 'crear-cliente' %}" class="btn">Ver Clientes</a>
+            </div>
+            <div class="card" id="administracion">
+                <h3>Administración</h3>
+                <p>Gestiona las configuraciones y operaciones administrativas.</p>
+                <a href="" class="btn">Administrar</a>
+            </div>
+            <div class="card" id="inventario">
+                <h3>Inventario</h3>
+                <p>Controla y supervisa los niveles de stock.</p>
+                <a href="" class="btn">Ver Inventario</a>
+            </div>
+        </div>
+    {% endblock %}
+</body>
+</html>

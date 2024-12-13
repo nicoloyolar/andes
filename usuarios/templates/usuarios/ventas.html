@@ -1,0 +1,35 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventas - ANDES</title>
+    <link rel="stylesheet" href="{% static 'css/styles-ventas.css' %}">
+</head>
+<body>
+
+{% block content %}
+<h1 class="ventas-title">Gestión de Ventas</h1>
+<p class="ventas-description">Aquí podrás consultar y gestionar las ventas realizadas.</p>
+
+<div class="ventas-container">
+    <div class="ventas-card">
+        <h3>Ingresar Venta</h3>
+        <p>Registra una nueva venta en el sistema.</p>
+        <a href="{% url 'ingresar-venta' %}" class="btn">Ingresar</a>
+    </div>
+    <div class="ventas-card">
+        <h3>Modificar Venta</h3>
+        <p>Edita los detalles de una venta existente.</p>
+        <a href="" class="btn">Modificar</a>
+    </div>
+    <div class="ventas-card">
+        <h3>Eliminar Venta</h3>
+        <p>Elimina una venta registrada.</p>
+        <a href="" class="btn">Eliminar</a>
+    </div>
+</div>
+{% endblock %}

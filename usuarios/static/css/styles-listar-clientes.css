@@ -1,0 +1,156 @@
+/* Reset global */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* Estilos generales del body */
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f4eae6;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 30px;
+}
+
+.page-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #8b0000;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+/* Estilos de la tabla */
+
+
+/* Estilos de la tabla */
+
+table {
+    width: 100%;
+    max-width: 100%;
+    /* Asegura que la tabla ocupe todo el espacio disponible */
+    border-collapse: collapse;
+    margin-top: 20px;
+    table-layout: fixed;
+    /* Esto asegura que las celdas ocupen el mismo espacio */
+}
+
+th,
+td {
+    padding: 10px 15px;
+    /* Menos padding para permitir más espacio */
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #8b0000;
+    color: white;
+    font-size: 16px;
+}
+
+td {
+    font-size: 14px;
+    color: #333;
+    background-color: #fff5f5;
+}
+
+tr:nth-child(even) {
+    background-color: #ffe4e1;
+}
+
+
+/* Estilo para enlaces de acciones */
+
+a {
+    text-decoration: none;
+    font-size: 14px;
+    padding: 6px 12px;
+    /* Ajuste de padding para los enlaces */
+    border-radius: 5px;
+    margin: 0 5px;
+    display: inline-block;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+
+/* Estilo para la última columna (Acciones) */
+
+td:last-child {
+    display: flex;
+    justify-content: space-around;
+    /* Distribuye los botones equitativamente */
+    align-items: center;
+    gap: 10px;
+    /* Espacio entre los botones */
+    padding: 0;
+    /* Elimina el padding extra */
+}
+
+a {
+    text-decoration: none;
+    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: 5px;
+    display: inline-block;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+a.btn-primary {
+    background-color: #8b0000;
+    color: white;
+}
+
+a.btn-danger {
+    background-color: #ff6347;
+    color: white;
+}
+
+a.btn-primary:hover,
+a.btn-danger:hover {
+    background-color: #b22222;
+    transform: scale(1.05);
+}
+
+a.btn-primary:active,
+a.btn-danger:active {
+    transform: scale(0.98);
+}
+
+a.btn-success {
+    background-color: #ff6347;
+    color: white;
+    padding: 12px 20px;
+    font-weight: bold;
+    display: block;
+    width: 100%;
+    margin-top: 30px;
+    border-radius: 5px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+a.btn-success:hover {
+    background-color: #d2691e;
+    transform: scale(1.05);
+}
+
+a.btn-success:active {
+    transform: scale(0.98);
+}

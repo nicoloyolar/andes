@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>APP ANDES</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-form">
+            <h1 class="login-title">Inicia sesión</h1>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="text" name="username" placeholder="Nombre de usuario" required autocomplete="off">
+                <input type="password" name="password" placeholder="Contraseña" required autocomplete="off">
+                <button type="submit">Iniciar sesión</button>
+            </form>
+        </div>
+        <div class="login-image">
+            <img src="{% static 'images/login-image.jpg' %}" alt="Imagen de fondo de login">
+        </div>
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</body>
+</html>
