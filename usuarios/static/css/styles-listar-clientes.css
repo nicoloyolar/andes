@@ -195,3 +195,16 @@ a.btn-success:active {
     background-color: #b22222;
     transform: scale(1.05);
 }
+
+.search-container {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+#filtro {
+    padding: 8px;
+    font-size: 14px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

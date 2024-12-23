@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
-from .forms import ClienteForm
+from .forms import *
 from .models import *
 from django.http import JsonResponse
 
@@ -39,6 +39,8 @@ def ingresar_venta_view(request):
     
     return render(request, 'usuarios/ingresar_venta.html', {'clientes': clientes})
 
+### MANTENEDOR CLIENTES
+
 def crear_cliente_view(request):
     if request.method == 'POST':
         form = ClienteForm(request.POST)
@@ -55,15 +57,45 @@ def lista_clientes_view(request):
     
     return render(request, 'usuarios/listar_clientes.html', {'clientes': clientes})
 
+def eliminar_cliente_view(request, cliente_id):
+    cliente = get_object_or_404(Cliente, id=cliente_id)
+    cliente.delete()
+    return JsonResponse({'success': True})
+
+###### MANTENEDOR PRODUCTOS
+
+def crear_producto_view(request):
+    if request.method == 'POST':
+        form = ProductoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('administracion')  
+    else:
+        form = ProductoForm()
+
+    return render(request, 'usuarios/crear_producto.html', {'form': form})
+    
+def listar_productos_view(request):
+    productos = Producto.objects.all()
+
+    return render(request, 'usuarios/administracion.html', {'productos': productos})
+
+def eliminar_producto_view(request, producto_id):
+    producto = get_object_or_404(Producto, id=producto_id)
+    producto.delete()
+    return JsonResponse({'success': True})
+
+###### MANTENEDOR VENTAS
+
 def venta_cliente_view(request, id):
     cliente = get_object_or_404(Cliente, id=id)
-    productos = Producto.objects.all()  # Obtener los productos disponibles
+    productos = Producto.objects.all()  
     productos_seleccionados = []
     total = 0
     
     if request.method == 'POST':
-        seleccionados = request.POST.getlist('productos')  # Lista de productos seleccionados
-        cantidades = request.POST.getlist('cantidades')  # Lista de cantidades de cada producto
+        seleccionados = request.POST.getlist('productos')  
+        cantidades = request.POST.getlist('cantidades') 
         
         for idx, producto_id in enumerate(seleccionados):
             producto = Producto.objects.get(id=producto_id)
@@ -90,7 +122,3 @@ def buscar_clientes(request):
 
     return JsonResponse(clientes_data, safe=False)
 
-def administracion_view(request):
-    productos = Producto.objects.all()
-
-    return render(request, 'usuarios/administracion.html', {'productos': productos})

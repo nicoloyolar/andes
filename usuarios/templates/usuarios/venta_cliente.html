@@ -15,15 +15,33 @@
         <div class="client-info">
             <h2>Datos del Cliente</h2>
             <div class="client-card">
-                <p><strong>Establecimiento:</strong> {{ cliente.establecimiento }}</p>
-                <p><strong>Nombre:</strong> {{ cliente.nombre }}</p>
-                <p><strong>RUT Empresa:</strong> {{ cliente.rut_empresa }}</p>
-                <p><strong>Dirección:</strong> {{ cliente.direccion }}</p>
-                <p><strong>Teléfono:</strong> {{ cliente.telefono }}</p>
+                <table class="client-table">
+                    <tbody>
+                        <tr>
+                            <th>Establecimiento</th>
+                            <td>{{ cliente.establecimiento }}</td>
+                        </tr>
+                        <tr>
+                            <th>Nombre</th>
+                            <td>{{ cliente.nombre }}</td>
+                        </tr>
+                        <tr>
+                            <th>RUT Empresa</th>
+                            <td>{{ cliente.rut_empresa }}</td>
+                        </tr>
+                        <tr>
+                            <th>Dirección</th>
+                            <td>{{ cliente.direccion }}</td>
+                        </tr>
+                        <tr>
+                            <th>Teléfono</th>
+                            <td>{{ cliente.telefono }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <h2>Productos Disponibles</h2>
         <form method="POST">
             {% csrf_token %}
             <table>
@@ -41,7 +59,7 @@
                         <td>{{ producto.nombre }}</td>
                         <td><input type="number" name="cantidades" step="any" min="0" value="0" class="cantidad-input" /></td>
                         <td>${{ producto.precio }}</td>
-                        <td><input type="checkbox" name="productos" value="{{ producto.id }}" /></td>
+                        <td></td>
                     </tr>
                     {% endfor %}
                 </tbody>

@@ -1,0 +1,26 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos - ANDES</title>
+    <link rel="stylesheet" href="{% static 'css/styles-crear-cliente.css' %}">
+</head>
+<body>
+
+{% block content %}
+    
+    <div class="form-container">
+        <button class="btn-back" onclick="history.back()">Atrás</button>
+        <h1>Crear Producto</h1>
+        <p>Por favor, ingresa los detalles del nuevo Producto.</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}  
+            <button type="submit" class="btn">Crear Producto</button>
+        </form>
+    </div>
+{% endblock %}

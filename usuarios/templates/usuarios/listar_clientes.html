@@ -14,6 +14,9 @@
         <h1 class="page-title">Clientes Registrados</h1>
 
         <table class="table">
+            <div class="search-container">
+                <input type="text" id="filtro" placeholder="Buscar cliente..." onkeyup="filtrarTabla()">
+            </div>
             <thead>
                 <tr>
                     <th>Nombre</th>
@@ -21,7 +24,6 @@
                     <th>RUT Empresa</th>
                     <th>Dirección</th>
                     <th>Teléfono</th>
-                    <th>Fecha de Registro</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -33,10 +35,11 @@
                         <td>{{ cliente.rut_empresa }}</td>
                         <td>{{ cliente.direccion }}</td>
                         <td>{{ cliente.telefono }}</td>
-                        <td>{{ cliente.fecha_registro }}</td>
                         <td>
-                            <a href="" class="btn btn-primary">Editar</a> |
-                            <a href="" class="btn btn-danger">Eliminar</a>
+                            <a href="" class="btn btn-primary">Observaciones</a>
+                            <a href="" class="btn btn-primary">Editar</a>
+                            <a href="javascript:void(0);" class="btn btn-danger eliminar-cliente" data-id="{{ cliente.id }}">Eliminar</a>
+
                         </td>
                     </tr>
                 {% empty %}
@@ -50,4 +53,81 @@
         <a href="{% url 'crear-cliente' %}" class="btn btn-success">Agregar Nuevo Cliente</a>
     </div>
 </body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.eliminar-cliente').forEach(function (boton) {
+        boton.addEventListener('click', function (event) {
+            const clienteId = boton.getAttribute('data-id');
+            
+            // Prevenir la acción predeterminada del enlace
+            event.preventDefault();
+            
+            if (confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
+                // Obtener el token CSRF desde la meta etiqueta
+                const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                
+                // Asegúrate de que csrftoken no esté vacío
+                if (!csrftoken) {
+                    console.error('CSRF token no encontrado');
+                    return;
+                }
+
+                fetch(`/eliminar_cliente/${clienteId}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': csrftoken,  // Enviar el token CSRF
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const fila = boton.closest('tr');
+                        fila.remove();
+                    } else {
+                        alert('Hubo un error al eliminar el cliente.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Hubo un error al intentar eliminar el cliente.');
+                });
+            }
+        });
+    });
+});
+
+</script>
+
+<script>
+
+    function filtrarTabla() {
+        const input = document.getElementById('filtro');
+        const filtro = input.value.toLowerCase();
+        const filas = document.querySelectorAll('.table tbody tr');
+
+        filas.forEach(function(fila) {
+            const columnas = fila.getElementsByTagName('td');
+            let muestraFila = false;
+
+            for (let i = 0; i < columnas.length; i++) {
+                const texto = columnas[i].textContent || columnas[i].innerText;
+                if (texto.toLowerCase().indexOf(filtro) > -1) {
+                    muestraFila = true;
+                    break;
+                }
+            }
+
+            if (muestraFila) {
+                fila.style.display = '';
+            } else {
+                fila.style.display = 'none';
+            }
+        });
+    }
+
+</script>
+
 </html>

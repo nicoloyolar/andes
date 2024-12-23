@@ -10,17 +10,17 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    min-height: 100vh;
+    height: 100vh;
     padding: 20px;
     overflow-x: hidden;
 }
 
 .container {
     width: 100%;
-    max-width: 1200px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
     padding: 20px;
 }
 
@@ -30,12 +30,6 @@ body {
     color: #8b0000;
     text-align: center;
     margin-bottom: 20px;
-}
-
-.table-wrapper {
-    width: 100%;
-    overflow-x: auto;
-    margin-top: 20px;
 }
 
 table {
@@ -68,14 +62,6 @@ tr:nth-child(even) {
     background-color: #ffe4e1;
 }
 
-td:last-child {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    gap: 10px;
-    padding: 0;
-}
-
 a {
     text-decoration: none;
     font-size: 14px;
@@ -83,6 +69,14 @@ a {
     border-radius: 5px;
     display: inline-block;
     transition: background 0.3s ease, transform 0.2s ease;
+}
+
+td:last-child {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+    padding: 0;
 }
 
 a.btn-primary {
@@ -127,28 +121,6 @@ a.btn-success:active {
     transform: scale(0.98);
 }
 
-.btn-back {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: #8b0000;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
-}
-
-.btn-back:hover {
-    background-color: #b22222;
-    transform: scale(1.05);
-}
-
-
-/* Media Queries */
-
 @media (max-width: 768px) {
     .container {
         padding: 15px;
@@ -157,6 +129,7 @@ a.btn-success:active {
         font-size: 24px;
     }
     table {
+        width: 100%;
         font-size: 12px;
     }
     th,
@@ -173,6 +146,10 @@ a.btn-success:active {
         width: 100%;
         text-align: center;
         margin: 5px 0;
+    }
+    a.btn-primary:hover,
+    a.btn-danger:hover {
+        background-color: #b22222;
     }
     a.btn-success {
         margin-top: 15px;
@@ -198,4 +175,34 @@ a.btn-success:active {
         font-size: 14px;
         padding: 12px;
     }
+}
+
+.btn-back {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #8b0000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-back:hover {
+    background-color: #b22222;
+    transform: scale(1.05);
+}
+
+.search-container {
+    margin-bottom: 20px;
+}
+
+#searchInput {
+    padding: 8px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }

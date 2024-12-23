@@ -9,28 +9,113 @@
     <link rel="stylesheet" href="{% static 'css/styles-administracion.css' %}">
 </head>
 <body>
-    <div class="client-details-container">
+    <div class="container">
         <button class="btn-back" onclick="history.back()">Atrás</button>
-
         <h1 class="page-title">Administración de Productos</h1>
-
-        <div class="client-info">
-            <h2>Listado de Productos</h2>
-
-            <div class="client-card">
-                {% if productos %}
-                    <ul>
-                        {% for producto in productos %}
-                            <li>
-                                <strong>{{ producto.nombre }}</strong> - ${{ producto.precio }}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>No hay productos disponibles.</p>
-                {% endif %}
-            </div>
+        
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Buscar productos..." />
         </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if productos %}
+                    {% for producto in productos %}
+                        <tr>
+                            <td>{{ producto.nombre }}</td>
+                            <td class="precio">{{ producto.precio }}</td> 
+                            <td>
+                                <a href="" class="btn btn-primary">Editar</a>
+                                <a href="javascript:void(0);" class="btn btn-danger eliminar-producto" data-id="{{ producto.id }}">Eliminar</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="3">No hay productos registrados.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        <a href="{% url 'crear-producto' %}" class="btn btn-success">Agregar Nuevo Producto</a>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.eliminar-producto').forEach(function (boton) {
+                boton.addEventListener('click', function () {
+                    const productoId = boton.getAttribute('data-id');
+                    
+                    if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+                        fetch(`/eliminar_producto/${productoId}/`, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                const fila = boton.closest('tr');
+                                fila.remove();
+                            } else {
+                                alert('Hubo un error al eliminar el producto.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Hubo un error al intentar eliminar el producto.');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('searchInput');
+        const table = document.querySelector('.table');
+        const rows = table.getElementsByTagName('tr');
+
+        searchInput.addEventListener('input', function () {
+            const filter = searchInput.value.toLowerCase(); 
+
+            Array.from(rows).forEach(function (row, index) {
+                if (index === 0) return;
+
+                const cells = row.getElementsByTagName('td');
+                const nombre = cells[0].textContent.toLowerCase();
+                const precio = cells[1].textContent.toLowerCase();
+
+                if (nombre.includes(filter) || precio.includes(filter)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.precio').forEach(function (element) {
+            let precio = element.textContent.trim();
+            let precioFormateado = parseFloat(precio).toLocaleString('es-CL');
+            element.textContent = "$" + precioFormateado;
+        });
+    });
+</script>
+
+
 </body>
 </html>

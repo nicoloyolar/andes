@@ -60,3 +60,64 @@ button:active {
     transform: scale(0.98);
     background: linear-gradient(180deg, #b22222, #8b0000);
 }
+
+.client-info {
+    margin: 20px auto;
+    padding: 20px;
+    border: 2px solid #8b0000;
+    border-radius: 10px;
+    background-color: #fff5f5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+}
+
+.client-info h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #8b0000;
+    text-align: center;
+    font-weight: bold;
+}
+
+.client-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+}
+
+.client-table th,
+.client-table td {
+    text-align: left;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+}
+
+.client-table th {
+    background-color: #8b0000;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.client-table td {
+    background-color: #fff5f5;
+    color: #333;
+}
+
+.client-table tr:hover td {
+    background-color: #ffe4e1;
+}
+
+@media (max-width: 768px) {
+    .client-info {
+        padding: 15px;
+    }
+    .client-info h2 {
+        font-size: 20px;
+    }
+    .client-table th,
+    .client-table td {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
