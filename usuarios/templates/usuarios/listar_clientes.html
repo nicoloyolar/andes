@@ -55,53 +55,6 @@
 </body>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.eliminar-cliente').forEach(function (boton) {
-        boton.addEventListener('click', function (event) {
-            const clienteId = boton.getAttribute('data-id');
-            
-            // Prevenir la acción predeterminada del enlace
-            event.preventDefault();
-            
-            if (confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
-                // Obtener el token CSRF desde la meta etiqueta
-                const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                
-                // Asegúrate de que csrftoken no esté vacío
-                if (!csrftoken) {
-                    console.error('CSRF token no encontrado');
-                    return;
-                }
-
-                fetch(`/eliminar_cliente/${clienteId}/`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'X-CSRFToken': csrftoken,  // Enviar el token CSRF
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        const fila = boton.closest('tr');
-                        fila.remove();
-                    } else {
-                        alert('Hubo un error al eliminar el cliente.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Hubo un error al intentar eliminar el cliente.');
-                });
-            }
-        });
-    });
-});
-
-</script>
-
-<script>
 
     function filtrarTabla() {
         const input = document.getElementById('filtro');

@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 def login_view(request):
     if request.method == 'POST':
@@ -57,10 +58,16 @@ def lista_clientes_view(request):
     
     return render(request, 'usuarios/listar_clientes.html', {'clientes': clientes})
 
-def eliminar_cliente_view(request, cliente_id):
-    cliente = get_object_or_404(Cliente, id=cliente_id)
-    cliente.delete()
-    return JsonResponse({'success': True})
+@csrf_exempt  # Permite manejar peticiones AJAX con CSRF
+def eliminar_cliente_view(request, id):
+    if request.method == 'DELETE':
+        try:
+            cliente = Cliente.objects.get(pk=id)
+            cliente.delete()
+            return JsonResponse({'success': True})
+        except Cliente.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Cliente no encontrado'})
+    return JsonResponse({'success': False, 'error': 'Método no permitido'})
 
 ###### MANTENEDOR PRODUCTOS
 
@@ -87,33 +94,12 @@ def eliminar_producto_view(request, producto_id):
 
 ###### MANTENEDOR VENTAS
 
-def venta_cliente_view(request, id):
-    cliente = get_object_or_404(Cliente, id=id)
-    productos = Producto.objects.all()  
-    productos_seleccionados = []
-    total = 0
-    
-    if request.method == 'POST':
-        seleccionados = request.POST.getlist('productos')  
-        cantidades = request.POST.getlist('cantidades') 
-        
-        for idx, producto_id in enumerate(seleccionados):
-            producto = Producto.objects.get(id=producto_id)
-            cantidad = float(cantidades[idx])
-            subtotal = producto.precio * cantidad
-            productos_seleccionados.append({
-                'producto': producto,
-                'cantidad': cantidad,
-                'subtotal': subtotal,
-            })
-            total += subtotal
-    
-    return render(request, 'usuarios/venta_cliente.html', {
-        'cliente': cliente,
-        'productos': productos,
-        'productos_seleccionados': productos_seleccionados,
-        'total': total
-    })
+def venta_cliente_view(request, cliente_id):
+    cliente = get_object_or_404(Cliente, id=cliente_id)
+    productos = Producto.objects.all()
+    if request.method == "POST":
+        pass
+    return render(request, 'usuarios/venta_cliente.html', {'cliente': cliente, 'productos': productos})
 
 def buscar_clientes(request):
     query = request.GET.get('search', '') 
