@@ -15,7 +15,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'usuarios',
-    'app_distribucion',
+    'andes',
 ]
 
 MIDDLEWARE = [
@@ -46,7 +46,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'app_distribucion.wsgi.application'
+WSGI_APPLICATION = 'andes.wsgi.application'
 
 DATABASES = {
     'default': {
