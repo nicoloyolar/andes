@@ -15,7 +15,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'usuarios',
-    'andes',
+    'app_distribucion',
 ]
 
 MIDDLEWARE = [
@@ -28,7 +28,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'andes.urls'
+ROOT_URLCONF = 'app_distribucion.urls'
 
 TEMPLATES = [
     {
@@ -46,7 +46,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'andes.wsgi.application'
+WSGI_APPLICATION = 'app_distribucion.wsgi.application'
 
 DATABASES = {
     'default': {
@@ -86,4 +86,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ALLOWED_HOSTS = ['andes.pythonanywhere.com']
+ALLOWED_HOSTS = ['app_distribucion.pythonanywhere.com']
