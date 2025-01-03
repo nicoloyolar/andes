@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f4eae6;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.ventas-title {
+    font-size: 2rem;
+    color: #8b0000;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.ventas-description {
+    font-size: 1.2rem;
+    color: #d2691e;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.ventas-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.ventas-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ventas-card h3 {
+    font-size: 1.5rem;
+    color: #8b0000;
+    margin-bottom: 10px;
+}
+
+.ventas-card p {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.ventas-card .btn {
+    text-decoration: none;
+    background: linear-gradient(180deg, #8b0000, #ff6347);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.ventas-card .btn:hover {
+    background: linear-gradient(180deg, #b22222, #d2691e);
+    transform: scale(1.05);
+}
+
+.ventas-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .ventas-container {
+        grid-template-columns: 1fr;
+    }
+}

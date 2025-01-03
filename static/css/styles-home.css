@@ -1,0 +1,107 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f4eae6;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+h2.welcome-title {
+    font-size: 2.2rem;
+    margin-top: 30px;
+    color: #8b0000;
+    text-align: center;
+}
+
+p.welcome-text {
+    font-size: 1.2rem;
+    color: #d2691e;
+    text-align: center;
+    margin: 10px 0 30px;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.card h3 {
+    font-size: 1.5rem;
+    color: #8b0000;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.card a.btn {
+    display: inline-block;
+    text-decoration: none;
+    background: linear-gradient(180deg, #8b0000, #ff6347);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 2px solid #ff6347;
+    font-size: 1rem;
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+.card a.btn:hover {
+    background: linear-gradient(180deg, #b22222, #d2691e);
+    border-color: #b22222;
+    transform: scale(1.05);
+}
+
+.card a.btn:active {
+    transform: scale(0.98);
+    background: linear-gradient(180deg, #b22222, #8b0000);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    h2.welcome-title {
+        font-size: 1.8rem;
+    }
+    p.welcome-text {
+        font-size: 1rem;
+        padding: 0 15px;
+    }
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+}
