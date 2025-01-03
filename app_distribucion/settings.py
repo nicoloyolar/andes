@@ -15,6 +15,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'usuarios',
+    'app_distribucion',
 ]
 
 MIDDLEWARE = [
@@ -27,7 +28,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'app_distribucion.urls'
+ROOT_URLCONF = 'andes.urls'
 
 TEMPLATES = [
     {
