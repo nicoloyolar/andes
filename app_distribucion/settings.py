@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-isgqornuzx#pf&k*id(gbbw)3^2s!a(ifxc$x52p9_!go$lul9'
 
-DEBUG = False
+DEBUG = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -84,6 +84,10 @@ STATIC_URL = 'static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'staticfiles'),
+]
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ALLOWED_HOSTS = ['app_distribucion.pythonanywhere.com']
+ALLOWED_HOSTS = ['andes.pythonanywhere.com', '127.0.0.1']

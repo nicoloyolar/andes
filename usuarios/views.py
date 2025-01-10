@@ -108,3 +108,15 @@ def buscar_clientes(request):
 
     return JsonResponse(clientes_data, safe=False)
 
+def editar_cliente_view(request, id):
+    cliente = get_object_or_404(Cliente, id=id)
+    
+    if request.method == 'POST':
+        form = ClienteForm(request.POST, instance=cliente)
+        if form.is_valid():
+            form.save()  
+            return redirect('listar-clientes')
+    else:
+        form = ClienteForm(instance=cliente)
+
+    return render(request, 'usuarios/editar_cliente.html', {'form': form})

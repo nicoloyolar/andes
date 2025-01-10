@@ -7,6 +7,7 @@ urlpatterns = [
     path('home/', home_view, name='home'),
     path('ventas/', ventas_view, name='ventas'),
     path('buscar-clientes/', buscar_clientes, name='buscar-clientes'),
+    path('editar-cliente/<int:id>/', editar_cliente_view, name='editar-cliente'),
     path('ingresar-venta/', ingresar_venta_view, name='ingresar-venta'),
     path('crear-cliente/', crear_cliente_view, name='crear-cliente'),
     path('crear-producto/', crear_producto_view, name='crear-producto'),

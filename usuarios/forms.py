@@ -16,3 +16,8 @@ class ProductoForm(forms.ModelForm):
         widgets = {
             'direccion': forms.Textarea(attrs={'rows': 3}),
         }
+
+class ClienteForm(forms.ModelForm):
+    class Meta:
+        model = Cliente
+        fields = ['nombre', 'establecimiento', 'rut_empresa', 'direccion', 'telefono']  

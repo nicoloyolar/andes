@@ -1,0 +1,135 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f4eae6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #8b0000;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    width: 100%;
+}
+
+form .form-group {
+    margin-bottom: 15px;
+}
+
+form label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+form input,
+form select,
+form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-color: #8b0000;
+}
+
+form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+button,
+a {
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+    text-align: center;
+}
+
+button {
+    background-color: #8b0000;
+    color: white;
+    border: none;
+}
+
+button:hover {
+    background-color: #b22222;
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+a.btn-secondary {
+    background-color: #ccc;
+    color: black;
+    text-align: center;
+    margin-left: 10px;
+}
+
+a.btn-secondary:hover {
+    background-color: #aaa;
+    transform: scale(1.05);
+}
+
+a.btn-secondary:active {
+    transform: scale(0.98);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    h1 {
+        font-size: 24px;
+    }
+    input,
+    select,
+    textarea {
+        font-size: 12px;
+    }
+    button,
+    a {
+        font-size: 12px;
+        padding: 8px 10px;
+    }
+}

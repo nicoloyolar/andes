@@ -10,7 +10,8 @@
 </head>
 <body>
     <div class="container">
-        <button class="btn-back" onclick="history.back()">Atrás</button>
+        <a href="{% url 'home' %}" class="btn-back">Atrás</a>
+
         <h1 class="page-title">Clientes Registrados</h1>
 
         <table class="table">
@@ -37,7 +38,7 @@
                         <td>{{ cliente.telefono }}</td>
                         <td>
                             <a href="" class="btn btn-primary">Observaciones</a>
-                            <a href="" class="btn btn-primary">Editar</a>
+                            <a href="{% url 'editar-cliente' cliente.id %}" class="btn btn-primary">Editar</a>
                             <a href="javascript:void(0);" class="btn btn-danger eliminar-cliente" data-id="{{ cliente.id }}">Eliminar</a>
 
                         </td>
