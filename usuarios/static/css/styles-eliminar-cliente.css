@@ -1,0 +1,137 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f4eae6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    overflow-x: hidden;
+    color: #333;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    text-align: center;
+}
+
+.page-title {
+    font-size: 30px;
+    font-weight: 600;
+    color: #8b0000;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form button,
+form a {
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+    width: 80%;
+    max-width: 300px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+form button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+}
+
+form button:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+}
+
+form button:active {
+    transform: scale(0.98);
+}
+
+form a {
+    background-color: #8b0000;
+    color: white;
+    text-decoration: none;
+}
+
+form a:hover {
+    background-color: #b22222;
+    transform: scale(1.05);
+}
+
+form a:active {
+    transform: scale(0.98);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+    .page-title {
+        font-size: 24px;
+    }
+    form button,
+    form a {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 20px;
+    }
+    form button,
+    form a {
+        padding: 10px 15px;
+    }
+}
+
+.btn-back {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #8b0000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-back:hover {
+    background-color: #b22222;
+    transform: scale(1.05);
+}
+
+.search-container {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+#filtro {
+    padding: 8px;
+    font-size: 14px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

@@ -1,0 +1,24 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Cliente</title>
+    <link rel="stylesheet" href="{% static 'css/styles-eliminar-cliente.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">Confirmar Eliminación</h1>
+
+        <p>¿Estás seguro de que deseas eliminar al cliente "{{ cliente.nombre }}"?</p>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+            <a href="{% url 'listar-clientes' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>

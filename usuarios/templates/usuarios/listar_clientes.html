@@ -39,8 +39,7 @@
                         <td>
                             <a href="" class="btn btn-primary">Observaciones</a>
                             <a href="{% url 'editar-cliente' cliente.id %}" class="btn btn-primary">Editar</a>
-                            <a href="javascript:void(0);" class="btn btn-danger eliminar-cliente" data-id="{{ cliente.id }}">Eliminar</a>
-
+                            <a href="{% url 'eliminar-cliente' cliente.id %}" class="btn btn-danger">Eliminar</a>
                         </td>
                     </tr>
                 {% empty %}

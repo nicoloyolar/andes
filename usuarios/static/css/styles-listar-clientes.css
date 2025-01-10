@@ -208,3 +208,17 @@ a.btn-success:active {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}

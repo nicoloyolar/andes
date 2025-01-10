@@ -58,16 +58,14 @@ def lista_clientes_view(request):
     
     return render(request, 'usuarios/listar_clientes.html', {'clientes': clientes})
 
-@csrf_exempt  # Permite manejar peticiones AJAX con CSRF
-def eliminar_cliente_view(request, id):
-    if request.method == 'DELETE':
-        try:
-            cliente = Cliente.objects.get(pk=id)
-            cliente.delete()
-            return JsonResponse({'success': True})
-        except Cliente.DoesNotExist:
-            return JsonResponse({'success': False, 'error': 'Cliente no encontrado'})
-    return JsonResponse({'success': False, 'error': 'Método no permitido'})
+def eliminar_cliente_view(request, cliente_id):
+    cliente = get_object_or_404(Cliente, id=cliente_id)
+    
+    if request.method == 'POST':
+        cliente.delete()
+        return redirect('listar-clientes')  # Redirigir a la lista de clientes después de eliminarlo
+
+    return render(request, 'usuarios/eliminar_cliente.html', {'cliente': cliente})
 
 ###### MANTENEDOR PRODUCTOS
 
