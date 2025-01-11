@@ -105,3 +105,23 @@ p.welcome-text {
         grid-template-columns: 1fr;
     }
 }
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logout-link {
+    color: #ff4d4d;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.logout-link:hover {
+    text-decoration: underline;
+    color: #ff1a1a;
+}

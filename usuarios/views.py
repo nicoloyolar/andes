@@ -20,12 +20,15 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            messages.success(request, 'Has iniciado sesión con éxito.')
             return redirect('home')  
         else:
             messages.error(request, 'Nombre de usuario o contraseña incorrectos.')
 
     return render(request, 'usuarios/login.html')
+
+def logout_view(request):
+    logout(request)  
+    return redirect('login') 
 
 def home_view(request):
     return render(request, 'usuarios/home.html')
