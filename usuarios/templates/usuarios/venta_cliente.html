@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        <form method="POST">
+        <form method="POST" id="ventaForm">
             {% csrf_token %}
             <table>
                 <thead>
@@ -57,9 +57,9 @@
                     {% for producto in productos %}
                     <tr>
                         <td>{{ producto.nombre }}</td>
-                        <td><input type="number" name="cantidades" step="any" min="0" value="0" class="cantidad-input" /></td>
-                        <td>${{ producto.precio }}</td>
-                        <td></td>
+                        <td><input type="number" name="cantidades" step="any" min="0" value="0" class="cantidad-input" placeholder="Cantidad en gramos" /></td>
+                        <td class="precio">${{ producto.precio }}</td>
+                        <td class="total">$0.00</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -72,7 +72,10 @@
                     <option value="abonado">Abonado</option>
                 </select>
             </div>
-            <button type="submit" class="btn-primary">Confirmar Venta</button>
+            <div class="total-global">
+                <h4>Total General: <span id="totalVentaGlobal">$0.00</span></h4>
+            </div>
+            <button type="button" class="btn-primary" id="confirmVentaBtn">Confirmar Venta</button>
         </form>
 
         {% if productos_seleccionados %}
@@ -95,8 +98,95 @@
                 {% endfor %}
             </tbody>
         </table>
-        <h4>Total: ${{ total }}</h4>
+        <h4>Total: <span id="totalVenta">${{ total }}</span></h4> 
         {% endif %}
     </div>
+
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup">
+            <h3>¿Estás seguro de confirmar la venta?</h3>
+            <button class="btn-confirm" id="popupConfirmBtn">Confirmar</button>
+            <button class="btn-cancel" id="popupCancelBtn">Cancelar</button>
+        </div>
+    </div>
+
+    <script>
+        const confirmVentaBtn = document.getElementById('confirmVentaBtn');
+        const popupOverlay = document.getElementById('popupOverlay');
+        const popupConfirmBtn = document.getElementById('popupConfirmBtn');
+        const popupCancelBtn = document.getElementById('popupCancelBtn');
+        const ventaForm = document.getElementById('ventaForm');
+        const cantidadInputs = document.querySelectorAll('.cantidad-input'); 
+        const totalElements = document.querySelectorAll('.total'); 
+        const totalVentaElement = document.getElementById('totalVenta'); 
+
+        function calcularTotal() {
+            let totalVenta = 0;
+
+            cantidadInputs.forEach((input, index) => {
+                const precio = parseFloat(input.closest('tr').querySelector('.precio').textContent.replace('$', '').trim());
+                const cantidad = parseFloat(input.value);
+                const totalProducto = (cantidad * precio) / 1000; // Ajuste por el valor en gramos
+
+                // Actualiza el total de ese producto en la tabla
+                const totalProductoElement = input.closest('tr').querySelector('.total');
+                totalProductoElement.textContent = `$${totalProducto.toFixed(2)}`;
+
+                // Suma el total de ese producto al total general
+                totalVenta += totalProducto;
+            });
+
+            // Actualiza el total en el nuevo contenedor global
+            const totalVentaGlobal = document.getElementById('totalVentaGlobal');
+            totalVentaGlobal.textContent = `$${totalVenta.toFixed(2)}`;
+        }
+
+        cantidadInputs.forEach(input => {
+            input.addEventListener('input', calcularTotal);
+        });
+
+        confirmVentaBtn.addEventListener('click', () => {
+            popupOverlay.style.display = 'flex';
+        });
+
+        popupConfirmBtn.addEventListener('click', () => {
+            ventaForm.submit();
+        });
+
+        popupCancelBtn.addEventListener('click', () => {
+            popupOverlay.style.display = 'none';
+        });
+
+        calcularTotal();
+    </script>
+
+    <script>
+
+        document.querySelectorAll('.cantidad-input').forEach(input => {
+            input.addEventListener('input', (e) => {
+                const row = e.target.closest('tr');
+                const precioKg = parseFloat(row.querySelector('td:nth-child(3)').textContent.replace('$', '').trim());
+                const cantidadGramos = parseFloat(e.target.value) || 0;
+
+                const total = (cantidadGramos * precioKg) / 1000;
+                row.querySelector('td:nth-child(4)').textContent = '$' + total.toFixed(2);
+                
+                calcularTotal();
+            });
+        });
+
+        function calcularTotal() {
+            let total = 0;
+            document.querySelectorAll('tr').forEach(row => {
+                const totalCell = row.querySelector('td:nth-child(4)');
+                if (totalCell && totalCell.textContent) {
+                    total += parseFloat(totalCell.textContent.replace('$', '').trim());
+                }
+            });
+            document.querySelector('.total-global').textContent = '$' + total.toFixed(2);
+        }
+
+    </script>
+
 </body>
 </html>
