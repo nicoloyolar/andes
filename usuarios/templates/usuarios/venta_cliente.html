@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Venta Cliente - UROMED</title>
+    <title>Venta Cliente</title>
     <link rel="stylesheet" href="{% static 'css/styles-venta-cliente.css' %}">
 </head>
 <body>
@@ -48,8 +48,8 @@
                 <thead>
                     <tr>
                         <th>Producto</th>
-                        <th>Peso</th>
-                        <th>Valor Kg</th>
+                        <th>Peso [grs]</th>
+                        <th>Valor [kg]</th>
                         <th>Total</th>
                     </tr>
                 </thead>
@@ -57,13 +57,15 @@
                     {% for producto in productos %}
                     <tr>
                         <td>{{ producto.nombre }}</td>
-                        <td><input type="number" name="cantidades" step="any" min="0" value="0" class="cantidad-input" placeholder="Cantidad en gramos" /></td>
+                        <td><input type="number" name="cantidades_{{ producto.id }}" step="any" min="0" value="0" class="cantidad-input" placeholder="Cantidad en gramos" /></td>
                         <td class="precio">${{ producto.precio }}</td>
                         <td class="total">$0.00</td>
+                        <input type="hidden" name="total_producto_{{ producto.id }}" class="total_producto" value="0" />
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
+
             <div class="venta-estado">
                 <label for="estado">Estado de la venta:</label>
                 <select name="estado" id="estado">
@@ -72,11 +74,42 @@
                     <option value="abonado">Abonado</option>
                 </select>
             </div>
+
             <div class="total-global">
                 <h4>Total General: <span id="totalVentaGlobal">$0.00</span></h4>
             </div>
-            <button type="button" class="btn-primary" id="confirmVentaBtn">Confirmar Venta</button>
+            <button type="submit" class="btn-primary" id="confirmVentaBtn">Confirmar Venta</button>
         </form>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                function actualizarTotales() {
+                    let totalVentaGlobal = 0;
+                    const cantidadInputs = document.querySelectorAll('.cantidad-input');
+                    cantidadInputs.forEach(function(input) {
+                        const row = input.closest('tr');
+                        const precio = parseFloat(row.querySelector('.precio').textContent.replace('$', '').replace(',', ''));
+                        const cantidad = parseFloat(input.value);
+                        const total = (precio * cantidad) / 1000;  
+
+                        row.querySelector('.total').textContent = `$${total.toFixed(2)}`;
+
+                        row.querySelector('.total_producto').value = total.toFixed(2);
+
+                        totalVentaGlobal += total;
+                    });
+
+                    document.querySelector('#totalVentaGlobal').textContent = `$${totalVentaGlobal.toFixed(2)}`;
+                }
+
+                const cantidadInputs = document.querySelectorAll('.cantidad-input');
+                cantidadInputs.forEach(function(input) {
+                    input.addEventListener('input', actualizarTotales);
+                });
+
+                actualizarTotales();
+            });
+        </script>
 
         {% if productos_seleccionados %}
         <h3>Productos seleccionados</h3>
@@ -93,7 +126,7 @@
                 <tr>
                     <td>{{ item.producto.nombre }}</td>
                     <td>{{ item.cantidad }} kg</td>
-                    <td>${{ item.subtotal }}</td>
+                    <td>$ {{ item.subtotal }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -126,17 +159,14 @@
             cantidadInputs.forEach((input, index) => {
                 const precio = parseFloat(input.closest('tr').querySelector('.precio').textContent.replace('$', '').trim());
                 const cantidad = parseFloat(input.value);
-                const totalProducto = (cantidad * precio) / 1000; // Ajuste por el valor en gramos
+                const totalProducto = (cantidad * precio) / 1000; 
 
-                // Actualiza el total de ese producto en la tabla
                 const totalProductoElement = input.closest('tr').querySelector('.total');
                 totalProductoElement.textContent = `$${totalProducto.toFixed(2)}`;
 
-                // Suma el total de ese producto al total general
                 totalVenta += totalProducto;
             });
 
-            // Actualiza el total en el nuevo contenedor global
             const totalVentaGlobal = document.getElementById('totalVentaGlobal');
             totalVentaGlobal.textContent = `$${totalVenta.toFixed(2)}`;
         }

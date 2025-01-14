@@ -1,3 +1,5 @@
+/* Reglas globales */
+
 * {
     margin: 0;
     padding: 0;
@@ -7,80 +9,251 @@
 body {
     font-family: 'Montserrat', sans-serif;
     background-color: #f4eae6;
-    color: #333;
     display: flex;
     justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    min-height: 100vh;
-    margin: 0;
+    align-items: flex-start;
+    height: 100vh;
+    padding: 20px;
+    overflow-x: hidden;
 }
 
-.ventas-title {
-    font-size: 2rem;
+
+/* Contenedor principal */
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+
+/* Título principal */
+
+.page-title {
+    font-size: 28px;
+    font-weight: bold;
     color: #8b0000;
     text-align: center;
     margin-bottom: 20px;
 }
 
-.ventas-description {
-    font-size: 1.2rem;
-    color: #d2691e;
-    text-align: center;
-    margin-bottom: 30px;
+
+/* Tabla */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    table-layout: auto;
 }
 
-.ventas-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
+th,
+td {
+    padding: 10px 15px;
+    text-align: left;
+    border: 1px solid #ddd;
 }
 
-.ventas-card {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.ventas-card h3 {
-    font-size: 1.5rem;
-    color: #8b0000;
-    margin-bottom: 10px;
-}
-
-.ventas-card p {
-    font-size: 1rem;
-    color: #333;
-    margin-bottom: 15px;
-}
-
-.ventas-card .btn {
-    text-decoration: none;
-    background: linear-gradient(180deg, #8b0000, #ff6347);
+th {
+    background-color: #8b0000;
     color: white;
-    padding: 10px 20px;
+    font-size: 16px;
+}
+
+td {
+    font-size: 14px;
+    color: #333;
+    background-color: #fff5f5;
+}
+
+
+/* Filas alternadas */
+
+tr:nth-child(even) {
+    background-color: #ffe4e1;
+}
+
+
+/* Botones */
+
+a {
+    text-decoration: none;
+    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: 5px;
+    display: inline-block;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+td:last-child {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+    padding: 0;
+}
+
+
+/* Estilos de los botones */
+
+a.btn-primary {
+    background-color: #8b0000;
+    color: white;
+}
+
+a.btn-danger {
+    background-color: #ff6347;
+    color: white;
+}
+
+a.btn-primary:hover,
+a.btn-danger:hover {
+    background-color: #b22222;
+    transform: scale(1.05);
+}
+
+a.btn-primary:active,
+a.btn-danger:active {
+    transform: scale(0.98);
+}
+
+
+/* Botón principal de acción */
+
+a.btn-success {
+    background-color: #ff6347;
+    color: white;
+    padding: 12px 20px;
+    font-weight: bold;
+    display: block;
+    width: 100%;
+    margin-top: 20px;
     border-radius: 5px;
     transition: background 0.3s ease, transform 0.2s ease;
 }
 
-.ventas-card .btn:hover {
-    background: linear-gradient(180deg, #b22222, #d2691e);
+a.btn-success:hover {
+    background-color: #d2691e;
     transform: scale(1.05);
 }
 
-.ventas-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+a.btn-success:active {
+    transform: scale(0.98);
 }
 
+
+/* Media Queries */
+
 @media (max-width: 768px) {
-    .ventas-container {
-        grid-template-columns: 1fr;
+    .container {
+        padding: 15px;
     }
+    .page-title {
+        font-size: 24px;
+    }
+    table {
+        width: 100%;
+        font-size: 12px;
+    }
+    th,
+    td {
+        padding: 8px 12px;
+    }
+    td:last-child {
+        display: block;
+        margin-top: 10px;
+    }
+    a.btn-primary,
+    a.btn-danger {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin: 5px 0;
+    }
+    a.btn-primary:hover,
+    a.btn-danger:hover {
+        background-color: #b22222;
+    }
+    a.btn-success {
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 20px;
+    }
+    table {
+        font-size: 11px;
+    }
+    th,
+    td {
+        padding: 6px 10px;
+    }
+    a.btn-primary,
+    a.btn-danger {
+        padding: 10px 12px;
+    }
+    a.btn-success {
+        font-size: 14px;
+        padding: 12px;
+    }
+}
+
+
+/* Botón para volver */
+
+.btn-back {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #8b0000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-back:hover {
+    background-color: #b22222;
+    transform: scale(1.05);
+}
+
+
+/* Contenedor de búsqueda */
+
+.search-container {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+#filtro {
+    padding: 8px;
+    font-size: 14px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+/* Estilos adicionales de botones */
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
 }

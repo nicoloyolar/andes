@@ -66,7 +66,7 @@ def eliminar_cliente_view(request, cliente_id):
     
     if request.method == 'POST':
         cliente.delete()
-        return redirect('listar-clientes')  # Redirigir a la lista de clientes después de eliminarlo
+        return redirect('listar-clientes')  
 
     return render(request, 'usuarios/eliminar_cliente.html', {'cliente': cliente})
 
@@ -121,3 +121,41 @@ def editar_cliente_view(request, id):
         form = ClienteForm(instance=cliente)
 
     return render(request, 'usuarios/editar_cliente.html', {'form': form})
+
+##### MODULO VENTAS
+
+def venta_cliente_view(request, cliente_id):
+    cliente = Cliente.objects.get(id=cliente_id)
+    productos = Producto.objects.all()
+
+    if request.method == 'POST':
+        productos_seleccionados = []
+        cantidades = []
+        total = 0
+
+        for producto in productos:
+            cantidad = float(request.POST.get(f'cantidades_{producto.id}', 0))
+            total_producto = float(request.POST.get(f'total_producto_{producto.id}', 0))
+
+            if cantidad > 0:
+                productos_seleccionados.append(producto)
+                cantidades.append(cantidad)
+                total += total_producto  
+
+        venta = Venta(cliente=cliente, total=total, estado=request.POST['estado'])
+        venta.save()
+
+        for i, producto in enumerate(productos_seleccionados):
+            detalle = DetalleVenta(venta=venta, producto=producto, cantidad=cantidades[i], subtotal=cantidades[i] * producto.precio / 1000)
+            detalle.save()
+
+        messages.success(request, 'Venta registrada correctamente!')
+        return redirect('ventas')
+
+    return render(request, 'usuarios/venta_cliente.html', {'cliente': cliente, 'productos': productos})
+
+def ventas_view(request):
+    ventas = Venta.objects.all()  
+    for venta in ventas:
+        print(venta.total) 
+    return render(request, 'usuarios/ventas.html', {'ventas': ventas})
