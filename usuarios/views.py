@@ -13,7 +13,6 @@ def login_view(request):
         password = request.POST.get('password')
 
         if not username or not password:
-            messages.error(request, 'Por favor, completa todos los campos.')
             return render(request, 'usuarios/login.html')
 
         user = authenticate(request, username=username, password=password)
@@ -22,7 +21,7 @@ def login_view(request):
             login(request, user)
             return redirect('home')  
         else:
-            messages.error(request, 'Nombre de usuario o contraseña incorrectos.')
+            pass
 
     return render(request, 'usuarios/login.html')
 
@@ -31,7 +30,11 @@ def logout_view(request):
     return redirect('login') 
 
 def home_view(request):
-    return render(request, 'usuarios/home.html')
+    query = request.GET.get('search', '')  
+    clientes = Cliente.objects.filter(nombre__icontains=query)  
+    
+    return render(request, 'usuarios/home.html', {'clientes': clientes})
+
 
 def ventas_view(request):
     return render(request, 'usuarios/ventas.html')
@@ -149,7 +152,6 @@ def venta_cliente_view(request, cliente_id):
             detalle = DetalleVenta(venta=venta, producto=producto, cantidad=cantidades[i], subtotal=cantidades[i] * producto.precio / 1000)
             detalle.save()
 
-        messages.success(request, 'Venta registrada correctamente!')
         return redirect('ventas')
 
     return render(request, 'usuarios/venta_cliente.html', {'cliente': cliente, 'productos': productos})

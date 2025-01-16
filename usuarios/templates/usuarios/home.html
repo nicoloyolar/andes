@@ -1,3 +1,4 @@
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -5,40 +6,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Andes App</title>
-    <link rel="stylesheet" href="{% static 'css/styles-home.css' %}">
+    <title>Listado de Clientes</title>
+    <link rel="stylesheet" href="{% static 'css/styles-listar-clientes.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
 </head>
 <body>
-    {% block content %}
-        <div class="header">
-            <h2 class="welcome-title">Bienvenido, {{ request.user.username }}!</h2>
-            <a href="{% url 'logout' %}" class="logout-link">Cerrar sesión</a>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="navbar-logo">
+                <i class="fas fa-home"></i> Andes
+            </a>
+            
+            <ul class="navbar-links">
+                <li><a href="#home"><i class="fas fa-box"></i> </a></li>
+            </ul>
+
+            <ul class="navbar-links">
+                <li><a href="#agregar-cliente"><i class="fas fa-user-plus"></i></a></li>
+            </ul>
+
+            <ul class="navbar-links">
+                <li><a href="javascript:void(0);" onclick="mostrarPopup()"><i class="fas fa-exchange-alt"></i> Datos Bancarios</a></li>
+            </ul>
+
+            <div class="navbar-search">
+                <input type="text" id="filtro" placeholder="Buscar cliente..." onkeyup="filtrarTabla()">
+            </div>
+
+            <a href="{% url 'logout' %}" class="navbar-logout">
+                <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+            </a>
         </div>
-        
-        <p class="welcome-text">Utiliza el menú de navegación para acceder a las funcionalidades disponibles.</p>
-        
-        <div class="cards-container">
-            <div class="card" id="ventas">
-                <h3>Ventas</h3>
-                <p>Consulta y gestiona las ventas realizadas.</p>
-                <a href="{% url 'ingresar-venta' %}" class="btn">Ver Ventas</a>
-            </div>
-            <div class="card" id="clientes">
-                <h3>Clientes</h3>
-                <p>Accede a la información de los clientes registrados.</p>
-                <a href="{% url 'listar-clientes' %}" class="btn">Ver Clientes</a>
-            </div>
-            <div class="card" id="administracion">
-                <h3>Administración</h3>
-                <p>Gestiona las configuraciones y operaciones administrativas.</p>
-                <a href="{% url 'administracion' %}" class="btn">Administrar</a>
-            </div>
-            <div class="card" id="inventario">
-                <h3>Inventario</h3>
-                <p>Controla y supervisa los niveles de stock.</p>
-                <a href="" class="btn">Ver Inventario</a>
-            </div>
+    </nav>
+
+    <div id="popup-datos" class="popup">
+        <div class="popup-content">
+            <span class="close-btn" onclick="cerrarPopup()">&times;</span>
+            <h2>Datos para Transferencia</h2>
+            <p><strong>Nombre:</strong> Comercializadora JADI SpA</p>
+            <p><strong>Rut:</strong> 78.026.919-7</p>
+            <p><strong>No Cta:</strong> 902-7-650594-6</p>
+            <p><strong>Banco:</strong> Banco Estado</p>
+            <p><strong>Tipo de Cuenta:</strong> Cuenta Corriente</p>
+            <p><strong>Email:</strong> comercial.jadispa@gmail.com</p>
         </div>
-    {% endblock %}
+    </div>
+
+    <div class="container">
+
+        <div class="btn-container">
+            <a href="{% url 'logout' %}" class="btn-back">
+                <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+            </a>
+
+            <!--
+                <a href="{% url 'crear-cliente' %}" class="btn-back" title="Agregar Nuevo Cliente">
+                            <i class="fas fa-user-plus"></i> Agregar Cliente
+                        </a>
+            -->
+            
+        </div>
+
+        <table class="table">
+            
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Establecimiento</th>
+                    <th>RUT Empresa</th>
+                    <th>Dirección</th>
+                    <th>Teléfono</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                    <tr onclick="redirigirAVenta('{{ cliente.id }}')" style="cursor: pointer;">
+                        <td>{{ cliente.nombre }}</td>
+                        <td>{{ cliente.establecimiento }}</td>
+                        <td>{{ cliente.rut_empresa }}</td>
+                        <td>{{ cliente.direccion }}</td>
+                        <td>{{ cliente.telefono }}</td>
+                        <td>
+                            <a href="" class="btn btn-primary" title="Observaciones">
+                                <i class="fas fa-sticky-note"></i>
+                            </a>
+                            <a href="" class="btn btn-primary" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="javascript:void(0);" class="btn btn-danger eliminar-cliente" data-id="{{ cliente.id }}" title="Eliminar">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="7">No hay clientes registrados.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
 </body>
+
+<script>
+
+    function filtrarTabla() {
+        const input = document.getElementById('filtro');
+        const filtro = input.value.toLowerCase();
+        const filas = document.querySelectorAll('.table tbody tr');
+
+        filas.forEach(function(fila) {
+            const columnas = fila.getElementsByTagName('td');
+            let muestraFila = false;
+
+            for (let i = 0; i < columnas.length; i++) {
+                const texto = columnas[i].textContent || columnas[i].innerText;
+                if (texto.toLowerCase().indexOf(filtro) > -1) {
+                    muestraFila = true;
+                    break;
+                }
+            }
+
+            if (muestraFila) {
+                fila.style.display = '';
+            } else {
+                fila.style.display = 'none';
+            }
+        });
+    }
+
+</script>
+
+<script>
+    function redirigirAVenta(clienteId) {
+        const url = `{% url 'venta_cliente' 0 %}`.replace('0', clienteId);
+        window.location.href = url;
+    }
+</script>
+
+<script>
+    function mostrarPopup() {
+        document.getElementById('popup-datos').style.display = 'flex';
+    }
+
+    function cerrarPopup() {
+        document.getElementById('popup-datos').style.display = 'none';
+    }
+</script>
+
+
 </html>

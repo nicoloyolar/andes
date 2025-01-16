@@ -1,40 +1,151 @@
-/* Estilos adicionales para la tabla y los inputs */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+.container-selectores {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.venta-estado {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+    min-width: 250px;
+}
+
+.venta-estado label {
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
+}
+
+.venta-estado select {
+    padding: 12px 15px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #333;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.venta-estado select:focus {
+    outline: none;
+    border-color: #8b0000;
+    background-color: #ffe4e1;
+}
+
+.venta-estado select option {
+    padding: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+.venta-estado:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.venta-estado:nth-child(odd) {
+    background-color: #fff;
+}
+
+.total-global {
+    flex-basis: 100%;
+    margin-top: 20px;
+}
+
+.total-global h4 {
+    font-size: 18px;
+    color: #333;
+    font-weight: 600;
+    margin: 0;
+}
+
+.total-global span {
+    font-size: 20px;
+    color: #8b0000;
+    font-weight: 700;
+}
+
+#confirmVentaBtn {
+    display: inline-block;
+    background-color: #8b0000;
+    color: white;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 20px;
+}
 
 table {
-    width: 100%;
+    margin: 20px auto;
+    width: 90%;
     border-collapse: collapse;
-    margin-top: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 th,
 td {
-    padding: 10px 15px;
+    padding: 12px 18px;
     text-align: left;
     border: 1px solid #ddd;
+    font-size: 14px;
+    color: #333;
 }
 
 th {
     background-color: #8b0000;
     color: white;
     font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 td {
-    font-size: 14px;
-    color: #333;
-    background-color: #fff5f5;
+    background-color: #f9f9f9;
 }
 
-tr:nth-child(even) {
+tr:nth-child(even) td {
     background-color: #ffe4e1;
+}
+
+tr:nth-child(odd) td {
+    background-color: #fff;
 }
 
 input[type="number"] {
     width: 100px;
-    padding: 5px;
+    padding: 8px 12px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 14px;
+    color: #333;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input[type="number"]:focus {
+    outline: none;
+    border-color: #8b0000;
+    background-color: #ffe4e1;
 }
 
 button {
@@ -130,7 +241,6 @@ button:active {
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
     display: none;
-    /* Oculto por defecto */
     justify-content: center;
     align-items: center;
     z-index: 1000;

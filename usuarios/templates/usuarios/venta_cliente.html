@@ -48,6 +48,7 @@
                 <thead>
                     <tr>
                         <th>Producto</th>
+                        <th>Stock</th>
                         <th>Peso [grs]</th>
                         <th>Valor [kg]</th>
                         <th>Total</th>
@@ -57,6 +58,7 @@
                     {% for producto in productos %}
                     <tr>
                         <td>{{ producto.nombre }}</td>
+                        <td>{{ producto.stock }}</td>
                         <td><input type="number" name="cantidades_{{ producto.id }}" step="any" min="0" value="0" class="cantidad-input" placeholder="Cantidad en gramos" /></td>
                         <td class="precio">${{ producto.precio }}</td>
                         <td class="total">$0.00</td>
@@ -66,19 +68,32 @@
                 </tbody>
             </table>
 
-            <div class="venta-estado">
-                <label for="estado">Estado de la venta:</label>
-                <select name="estado" id="estado">
-                    <option value="pagado">Pagado</option>
-                    <option value="pendiente">Pendiente</option>
-                    <option value="abonado">Abonado</option>
-                </select>
+            <div class="container-selectores">
+                <div class="venta-estado">
+                    <label for="estado">Estado de la venta:</label>
+                    <select name="estado" id="estado">
+                        <option value="pagado">Pagado</option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="abonado">Abonado</option>
+                    </select>
+                </div>
+
+                <div class="venta-estado">
+                    <label for="estado">Método de Pago</label>
+                    <select name="estado" id="estado">
+                        <option value="efectivo">Efectivo</option>
+                        <option value="transferencia">Transferencia</option>
+                        <option value="cheque">Cheque</option>
+                    </select>
+                </div>
+
+                <div class="total-global">
+                    <h4>Total General: <span id="totalVentaGlobal">$0.00</span></h4>
+                </div>
+
+                <button type="submit" class="btn-primary" id="confirmVentaBtn">Confirmar Venta</button>
             </div>
 
-            <div class="total-global">
-                <h4>Total General: <span id="totalVentaGlobal">$0.00</span></h4>
-            </div>
-            <button type="submit" class="btn-primary" id="confirmVentaBtn">Confirmar Venta</button>
         </form>
 
         <script>
