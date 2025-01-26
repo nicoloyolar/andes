@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -59,8 +58,17 @@
                     <tr>
                         <td>{{ producto.nombre }}</td>
                         <td>{{ producto.stock }}</td>
-                        <td><input type="number" name="cantidades_{{ producto.id }}" step="any" min="0" value="0" class="cantidad-input" placeholder="Cantidad en gramos" /></td>
-                        <td class="precio">${{ producto.precio }}</td>
+                        <td>
+                            <input 
+                                type="number" 
+                                name="cantidades_{{ producto.id }}" 
+                                step="any" 
+                                min="0" 
+                                value="0" 
+                                class="cantidad-input" 
+                                placeholder="Cantidad en gramos" />
+                        </td>
+                        <td class="precio">{{ producto.precio }}</td>
                         <td class="total">$0.00</td>
                         <input type="hidden" name="total_producto_{{ producto.id }}" class="total_producto" value="0" />
                     </tr>
@@ -79,8 +87,8 @@
                 </div>
 
                 <div class="venta-estado">
-                    <label for="estado">Método de Pago</label>
-                    <select name="estado" id="estado">
+                    <label for="metodo_pago">Método de Pago</label>
+                    <select name="metodo_pago" id="metodo_pago">
                         <option value="efectivo">Efectivo</option>
                         <option value="transferencia">Transferencia</option>
                         <option value="cheque">Cheque</option>
@@ -93,38 +101,8 @@
 
                 <button type="submit" class="btn-primary" id="confirmVentaBtn">Confirmar Venta</button>
             </div>
-
         </form>
-
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                function actualizarTotales() {
-                    let totalVentaGlobal = 0;
-                    const cantidadInputs = document.querySelectorAll('.cantidad-input');
-                    cantidadInputs.forEach(function(input) {
-                        const row = input.closest('tr');
-                        const precio = parseFloat(row.querySelector('.precio').textContent.replace('$', '').replace(',', ''));
-                        const cantidad = parseFloat(input.value);
-                        const total = (precio * cantidad) / 1000;  
-
-                        row.querySelector('.total').textContent = `$${total.toFixed(2)}`;
-
-                        row.querySelector('.total_producto').value = total.toFixed(2);
-
-                        totalVentaGlobal += total;
-                    });
-
-                    document.querySelector('#totalVentaGlobal').textContent = `$${totalVentaGlobal.toFixed(2)}`;
-                }
-
-                const cantidadInputs = document.querySelectorAll('.cantidad-input');
-                cantidadInputs.forEach(function(input) {
-                    input.addEventListener('input', actualizarTotales);
-                });
-
-                actualizarTotales();
-            });
-        </script>
+    </div>
 
         {% if productos_seleccionados %}
         <h3>Productos seleccionados</h3>
@@ -177,13 +155,13 @@
                 const totalProducto = (cantidad * precio) / 1000; 
 
                 const totalProductoElement = input.closest('tr').querySelector('.total');
-                totalProductoElement.textContent = `$${totalProducto.toFixed(2)}`;
+                totalProductoElement.textContent = `$${totalProducto}`;
 
                 totalVenta += totalProducto;
             });
 
             const totalVentaGlobal = document.getElementById('totalVentaGlobal');
-            totalVentaGlobal.textContent = `$${totalVenta.toFixed(2)}`;
+            totalVentaGlobal.textContent = `$${totalVenta}`;
         }
 
         cantidadInputs.forEach(input => {
@@ -210,11 +188,11 @@
         document.querySelectorAll('.cantidad-input').forEach(input => {
             input.addEventListener('input', (e) => {
                 const row = e.target.closest('tr');
-                const precioKg = parseFloat(row.querySelector('td:nth-child(3)').textContent.replace('$', '').trim());
+                const precioKg = parseFloat(row.querySelector('td:nth-child(4)').textContent.replace('$', '').trim());
                 const cantidadGramos = parseFloat(e.target.value) || 0;
 
                 const total = (cantidadGramos * precioKg) / 1000;
-                row.querySelector('td:nth-child(4)').textContent = '$' + total.toFixed(2);
+                row.querySelector('td:nth-child(5)').textContent = '$' + total;
                 
                 calcularTotal();
             });
@@ -223,12 +201,12 @@
         function calcularTotal() {
             let total = 0;
             document.querySelectorAll('tr').forEach(row => {
-                const totalCell = row.querySelector('td:nth-child(4)');
+                const totalCell = row.querySelector('td:nth-child(5)');
                 if (totalCell && totalCell.textContent) {
                     total += parseFloat(totalCell.textContent.replace('$', '').trim());
                 }
             });
-            document.querySelector('.total-global').textContent = '$' + total.toFixed(2);
+            document.querySelector('.total-global').textContent = '$' + total;
         }
 
     </script>
